@@ -1,7 +1,6 @@
 ﻿using LanchesMac.Models;
 using LanchesMac.ViewModel;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 
 namespace LanchesMac.Components
 {

@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace LanchesMac.Controllers
 {
@@ -22,9 +21,6 @@ namespace LanchesMac.Controllers
 
         public IActionResult List(string categoria)
         {
-            //ViewBag.Lanche = "Lanches";
-            //ViewData["Categoria"] = "Categoria";
-
             //var lanches = _lancheRepository.Lanches;
             //return View(lanches)
 
@@ -73,6 +69,27 @@ namespace LanchesMac.Controllers
                 return View("~/Views/Error/Error.cshtml");
             }
             return View(lanche);
+        }
+
+        public IActionResult Search(string searchString)
+        {
+            string _searchString = searchString;
+            IEnumerable<Lanche> lanches;
+            string _categoriaAtual = string.Empty;
+
+            // Caso searchString esteja vazio, todos os lanches do repositório serão armazenados no IEnumerable lanches
+            if (string.IsNullOrEmpty(_searchString)) 
+            {
+                lanches = _lancheRepository.Lanches.OrderBy(l => l.LancheId);
+            }
+            else
+            // Caso searchString contenha algum texto, apenas os lanches do repositório que contenham esse nome serão armazenados no IEnumerable lanches
+            {
+                lanches = _lancheRepository.Lanches
+                    .Where(l => l.Nome.ToLower().Contains(_searchString.ToLower()));
+            }
+
+            return View("~/Views/Lanche/List.cshtml", new LancheListViewModel { Lanches = lanches, CategoriaAtual = "Todos os lanches" });
         }
     }
 }

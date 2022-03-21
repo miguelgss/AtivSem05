@@ -42,6 +42,7 @@ namespace LanchesMac
             // Registro dos repositories como serviço, permitindo a "interpretação" da interface como uma instância da implementação
             services.AddTransient<ICategoriaRepository, CategoriaRepository>();
             services.AddTransient<ILancheRepository, LancheRepository>();
+            services.AddTransient<IPedidoRepository, PedidoRepository>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddScoped(cp => CarrinhoCompra.GetCarrinho(cp));
