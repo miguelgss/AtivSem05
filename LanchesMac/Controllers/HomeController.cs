@@ -8,12 +8,10 @@ namespace LanchesMac.Controllers
     public class HomeController : Controller
     {
         private readonly ILancheRepository _lancheRepository;
-        private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger, ILancheRepository lancheRepository)
+        public HomeController(ILancheRepository lancheRepository)
         {
             _lancheRepository = lancheRepository;
-            _logger = logger;
         }
 
         public IActionResult Index()
@@ -23,6 +21,11 @@ namespace LanchesMac.Controllers
                 LanchesPreferidos = _lancheRepository.LanchesPreferidos
             };
             return View(homeViewModel);
+        }
+
+        public IActionResult AccessDenied()
+        {
+            return View();
         }
 
     }

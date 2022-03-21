@@ -22,18 +22,31 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <div class="text-dark">@await Component.InvokeAsync("CategoriaMenu")</div>
-                        </li>                        
+                            <div class="text-dark">
+                                    @await Component.InvokeAsync("CategoriaMenu") 
+                            </div>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Contato" asp-action="Index">Contato</a>
                         </li>
+                            @if (User.IsInRole("Admin"))
+                             {
+                                 <li><a asp-area="Admin" asp-controller="Admin" asp-action="Index">ADMIN</a></li>
+                             }
                         <li class="nav-item">
-                            <div class="text-dark">@await Component.InvokeAsync("CarrinhoCompraResumo")</div>
-                        </li>                        
+                            <div class="text-dark">
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                @await Component.InvokeAsync("CarrinhoCompraResumo")
+                            }
+                            </div>
+                        </li>
+
                     </ul>
                     <form asp-controller="Lanche" asp-action="Search" method="get">
                         <input type="text" placeholder="Procurar lanche" name="searchString" value="@ViewData["searchString"]" />
                     </form>
+                    @await Html.PartialAsync("_LoginPartial")
                 </div>
             </div>
         </nav>
