@@ -2,7 +2,6 @@
 using LanchesMac.Repositories;
 using LanchesMac.ViewModel;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -20,11 +19,7 @@ namespace LanchesMac.Controllers
         }
 
         public IActionResult List(string categoria)
-        {
-            //var lanches = _lancheRepository.Lanches;
-            //return View(lanches)
-
-            string _categoria = categoria;
+        {          
             IEnumerable<Lanche> lanches;
             string categoriaAtual = string.Empty;
 
@@ -36,21 +31,12 @@ namespace LanchesMac.Controllers
             } else // Caso a categoria tenha sido informada...
             {
                 // Retorna as que possuem categoria "Normal"
-                if (string.Equals("Normal", _categoria, StringComparison.OrdinalIgnoreCase))
-                {
-                    lanches = _lancheRepository.Lanches
-                        .Where(l => l.Categoria.CategoriaNome.Equals("Normal"))
-                        .OrderBy(l => l.Nome);
-                }
-                // Retorna as que possuem categoria "Natural"
-                else
-                {
-                    lanches = _lancheRepository.Lanches
-                        .Where(l => l.Categoria.CategoriaNome.Equals("Natural"))
-                        .OrderBy(l => l.Nome);
-                }
 
-                categoriaAtual = _categoria;
+                    lanches = _lancheRepository.Lanches
+                        .Where(l => l.Categoria.CategoriaNome.Equals(categoria))
+                        .OrderBy(l => l.Nome);
+
+                categoriaAtual = categoria;
             }
 
             var lancheslistViewModel = new LancheListViewModel()
